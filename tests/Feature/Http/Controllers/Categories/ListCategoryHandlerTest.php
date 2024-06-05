@@ -1,8 +1,10 @@
 <?php
 
-beforeEach(function (){
-   \App\Models\Category::factory(30)
-       ->create();
+declare(strict_types=1);
+
+beforeEach(function () {
+    \App\Models\Category::factory(30)
+        ->create();
 });
 
 test('should display a list of categories', function () {
@@ -18,7 +20,7 @@ test('should display a list of categories with pagination', function () {
 
     $response->assertViewIs('categories.list');
     $response->assertViewHas('categories');
-    $response->assertViewHas('categories', fn($categories) => 15 === $categories->count());
+    $response->assertViewHas('categories', fn ($categories) => 15 === $categories->count());
 });
 
 test('should orders categories by creation date', function () {

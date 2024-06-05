@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Tag;
 use App\Models\User;
 
-beforeEach(function (){
+beforeEach(function () {
     Article::factory(1)
         ->for(Category::factory())
         ->has(Tag::factory()->count(3))

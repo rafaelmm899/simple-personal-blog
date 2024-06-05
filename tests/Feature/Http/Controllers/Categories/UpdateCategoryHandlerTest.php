@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Category;
 use App\Models\User;
+
 use function Pest\Laravel\actingAs;
 
-beforeEach(function (){
+beforeEach(function () {
     User::factory()->create();
     Category::factory()->create();
 });
@@ -14,7 +17,7 @@ test('should update a category', function () {
     $oldName = Category::first()->name;
     $response = actingAs(User::first())
         ->put(
-            route('category.update',Category::first()),
+            route('category.update', Category::first()),
             [
                 'name' => $newName,
             ]

@@ -1,8 +1,10 @@
 <?php
 
-beforeEach(function (){
-   \App\Models\Tag::factory(30)->create();
-   \App\Models\User::factory()->create();
+declare(strict_types=1);
+
+beforeEach(function () {
+    \App\Models\Tag::factory(30)->create();
+    \App\Models\User::factory()->create();
 });
 
 test('should list tags', function () {
@@ -20,7 +22,7 @@ test('should list tags with pagination', function () {
 
     $response->assertViewIs('tags.list');
     $response->assertViewHas('tags');
-    $response->assertViewHas('tags', fn($tags) => 15 === $tags->count());
+    $response->assertViewHas('tags', fn ($tags) => 15 === $tags->count());
 });
 
 test('should orders tags by creation date', function () {

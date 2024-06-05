@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 
-beforeEach(function (){
+beforeEach(function () {
     User::factory()->create();
 });
 
@@ -56,5 +58,3 @@ test('should throw validation error for max length', function () {
     $response->assertSessionHasErrors();
     $this->assertDatabaseCount('categories', 0);
 });
-
-

@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Tag;
 use App\Models\User;
+
 use function Pest\Laravel\actingAs;
 
-beforeEach(function (){
+beforeEach(function () {
     User::factory()->create();
     \App\Models\Tag::factory()->create();
 });
@@ -14,7 +17,7 @@ test('should update a tag', function () {
     $oldName = Tag::first()->name;
     $response = actingAs(User::first())
         ->put(
-            route('tag.update',Tag::first()),
+            route('tag.update', Tag::first()),
             [
                 'name' => $newName,
             ]
@@ -53,7 +56,6 @@ test('should throw validation error for required fields', function () {
     $response->assertSessionHasErrors();
     $this->assertDatabaseCount('tags', 1);
 });
-
 
 test('should throw validation error for max length', function () {
     $response = actingAs(User::first())

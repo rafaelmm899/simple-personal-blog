@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Tag;
 use App\Models\User;
+
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\delete;
 
-beforeEach(function (){
-   User::factory()->create();
-   Tag::factory()->create();
+beforeEach(function () {
+    User::factory()->create();
+    Tag::factory()->create();
 });
 
 test('should delete a category', function () {

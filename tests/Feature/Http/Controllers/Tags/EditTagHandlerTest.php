@@ -1,8 +1,11 @@
 <?php
 
-use App\Models\{User, Tag};
+declare(strict_types=1);
 
-beforeEach(function (){
+use App\Models\Tag;
+use App\Models\User;
+
+beforeEach(function () {
     User::factory()->create();
 
     Tag::factory()->create();

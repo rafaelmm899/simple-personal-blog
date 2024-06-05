@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Category;
 use App\Models\User;
 
-beforeEach(function (){
-   User::factory()->create();
+beforeEach(function () {
+    User::factory()->create();
 
-   Category::factory()->create();
+    Category::factory()->create();
 });
 
 test('should display the edit category page', function () {
