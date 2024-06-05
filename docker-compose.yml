@@ -1,0 +1,64 @@
+version: '3'
+services:
+  php:
+    container_name: php-apache-custom
+    ports:
+      - "8080:80"
+    image: php8.3-apache-custom
+    build:
+      context: ./docker/php-apache
+      args:
+        - USER_ID=${UID:-1000}
+        - GROUP_ID=${GID:-1000}
+    volumes:
+      - ".:/var/www/html"
+      - "./docker/php-apache/vhost.conf:/etc/apache2/sites-enabled/000-default.conf"
+    networks:
+      - appnet
+  db:
+    container_name: postgres-laravel-simple-blog
+    image: postgres-laravel-simple-blog
+    build: ./docker/postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: blog
+      POSTGRES_DB: blogs
+      POSTGRES_USER: blog
+    volumes:
+        - pgdata:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - appnet
+  node:
+      container_name: node-laravel-simple-blog
+      image: node-laravel-simple-blog
+      build:
+        context: .
+        dockerfile: ./docker/node/Dockerfile
+      volumes:
+          - .:/usr/src/app
+      ports:
+          - "3000:3000"
+          - "5173:5173"
+      networks:
+          - appnet
+  mailhog:
+      image: mailhog/mailhog:latest
+      ports:
+        - "1025:1025"
+        - "8025:8025"
+      networks:
+        - appnet
+  redis:
+      image: redis:alpine
+      restart: unless-stopped
+      ports:
+          - "6379:6379"
+      networks:
+          - appnet
+volumes:
+    pgdata:
+networks:
+  appnet:
+    driver: bridge
