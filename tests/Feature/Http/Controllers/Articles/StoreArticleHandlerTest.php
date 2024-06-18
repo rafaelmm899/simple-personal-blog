@@ -41,14 +41,20 @@ test('should store an article', function () {
 });
 
 test('should redirect to login if not authenticated', function () {
-    $response = \Pest\Laravel\post(route('article.store'), [
+    $data = [
         'title' => fake()->title(),
         'content' => fake()->text(),
         'category' => \App\Models\Category::first()->id,
         'tags' => \App\Models\Tag::all()->pluck('id')->toArray(),
         'image' => null,
-    ]);
+    ];
+
+    $response = \Pest\Laravel\post(route('article.store'), $data);
+
     $response->assertRedirect(route('login'));
+    $response->assertSessionMissing('status');
+
+    $this->assertDatabaseMissing('articles', $data);
 });
 
 test('should store image if provided', function () {
